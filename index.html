@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather ?</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <h3>The Weather in</h3>
+        <input
+          type="text"
+          placeholder="Type a city..."
+          v-model="city"
+          @compositionstart="startComposing"
+          @compositionend="endComposing"
+          @keyup.enter="getWhether"
+        />
+        <button @click="getWhether">is</button>
+      </div>
+
+      <p>{{ whetherInfo }}</p>
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+      createApp({
+        data() {
+          return {
+            whetherInfo: "",
+            city: "",
+            lastComposingStatus: false,
+            isComposing: false,
+          };
+        },
+        methods: {
+          getWhether() {
+            if (this.isComposing) return;
+            if (this.lastComposingStatus) {
+              this.lastComposingStatus = false;
+              return;
+            }
+            if (this.city === "") return;
+
+            fetch(`/.netlify/functions/weather?location=${this.city}`)
+              .then((resp) => resp.json())
+              .then((data) => {
+                console.log(data);
+                this.whetherInfo = JSON.stringify(data);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          },
+          startComposing() {
+            this.isComposing = true;
+            this.lastComposingStatus = false;
+          },
+          endComposing() {
+            this.isComposing = false;
+            this.lastComposingStatus = true;
+          },
+        },
+        // mounted() {
+        //     this.getWhether();
+        // }
+      }).mount("#app");
+    </script>
+  </body>
+</html>
