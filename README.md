@@ -1,4 +1,4 @@
-# hows-the-whether
+# hows-the-weather
 
 ## tryout here
 
