@@ -19,3 +19,6 @@
 4. Run Netlify Dev Locally `netlify dev`
    - Note: might need admin permission
      => Add `sudo` before the code
+
+## Try out online
+   [Click me](https://daoshiweatherni.netlify.app)
