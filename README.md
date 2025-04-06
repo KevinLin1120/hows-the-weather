@@ -21,4 +21,4 @@
      => Add `sudo` before the code
 
 ## Try out online
-   [Click me](https://daoshiweatherni.netlify.app)
+   <a href="https://daoshiweatherni.netlify.app" target="_blank">Visit Site</a>
