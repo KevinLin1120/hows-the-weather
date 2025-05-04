@@ -1,4 +1,4 @@
-# hows-the-whether
+# hows-the-weather
 
 ## tryout here
 
@@ -19,3 +19,6 @@
 4. Run Netlify Dev Locally `netlify dev`
    - Note: might need admin permission
      => Add `sudo` before the code
+
+## Try out online
+   [Visit Site](https://daoshiweatherni.netlify.app)
