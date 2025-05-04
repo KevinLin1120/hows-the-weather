@@ -4,7 +4,8 @@ import fetch from 'node-fetch';
 exports.handler = async (event, constext) => {
     const location = event.queryStringParameters.location;
     const apiKey = process.env.VISUAL_CROSSING_API_KEY;
-    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${apiKey}`;
+    const today = new Date().toISOString().slice(0, 10);
+    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${today}?key=${apiKey}`;
 
     try {
         const response = await fetch(url);

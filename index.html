@@ -4,32 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather ?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
   <body>
-    <div id="app">
-      <div>
-        <h3>The Weather in</h3>
-        <input
-          type="text"
-          placeholder="Type a city..."
-          v-model="city"
-          @compositionstart="startComposing"
-          @compositionend="endComposing"
-          @keyup.enter="getWhether"
-        />
-        <button @click="getWhether">is</button>
-      </div>
-
-      <p>{{ whetherInfo }}</p>
+    <div id="app" class="container">
+        <div class="row justify-content-center">
+            <div class="col-3">
+              <h3 class="text-center">The Weather in</h3>
+              <div class="d-flex">
+                  <input
+                    class="form-control me-3"
+                    type="text"
+                    placeholder="Type a city..."
+                    v-model="city"
+                    @compositionstart="startComposing"
+                    @compositionend="endComposing"
+                    @keyup.enter="getWhether"
+                  />
+                  <button @click="getWhether" class="btn btn-outline-dark">is</button>
+              </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8" v-if="weatherInfo.currentConditions">
+                {{ weatherInfo.currentConditions.temp }}
+                {{ weatherInfo.currentConditions.windspeed }}
+                {{ weatherInfo.currentConditions.precipprob + '%' }}
+                {{ weatherInfo.currentConditions.conditions }}
+            </div>
+        </div>
+        <div class="row justify-content-center" v-if="weatherInfo.days">
+            <div class="col-12 col-sm-8">
+                <div class="d-flex overflow-auto">
+                    <div class="col-2" v-for="hour in weatherInfo.days[0].hours" :key="hour">
+                        {{ hour.temp }}
+                        {{ hour.windspeed }}
+                        {{ hour.precipprob + '%' }}
+                        {{ hour.conditions }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
     <script>
       const { createApp, ref } = Vue;
       createApp({
         data() {
           return {
-            whetherInfo: "",
+            weatherInfo: {},
             city: "",
             lastComposingStatus: false,
             isComposing: false,
@@ -48,7 +73,7 @@
               .then((resp) => resp.json())
               .then((data) => {
                 console.log(data);
-                this.whetherInfo = JSON.stringify(data);
+                this.weatherInfo = data;
               })
               .catch((error) => {
                 console.log(error);
