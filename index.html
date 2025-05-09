@@ -137,12 +137,10 @@
               });
           },
           scrollToLocalCurrentHour() {
-            const currHour = this.weatherInfo.currentConditions.datetime.slice(
-              0,
-              2
-            );
-
+            const currHour = this.weatherInfo.currentConditions.datetime.slice(0,2)%12;
+            console.log(currHour);
             const target = this.$refs[`hour-${currHour}`];
+            console.log(target);
             if (target && target[0]) {
               target[0].scrollIntoView({
                 behavior: "smooth",
